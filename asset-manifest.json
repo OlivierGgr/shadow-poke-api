@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/OlivierGgr/shadow-poke-api/static/css/main.f8e9e629.css",
+    "main.js": "/OlivierGgr/shadow-poke-api/static/js/main.77c531d2.js",
+    "static/js/787.339a46b9.chunk.js": "/OlivierGgr/shadow-poke-api/static/js/787.339a46b9.chunk.js",
+    "index.html": "/OlivierGgr/shadow-poke-api/index.html",
+    "main.f8e9e629.css.map": "/OlivierGgr/shadow-poke-api/static/css/main.f8e9e629.css.map",
+    "main.77c531d2.js.map": "/OlivierGgr/shadow-poke-api/static/js/main.77c531d2.js.map",
+    "787.339a46b9.chunk.js.map": "/OlivierGgr/shadow-poke-api/static/js/787.339a46b9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f8e9e629.css",
+    "static/js/main.77c531d2.js"
+  ]
+}
