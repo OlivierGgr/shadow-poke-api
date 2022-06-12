@@ -1,38 +1,123 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 100%;
+  padding-top: 5%;
+}
+
+.poke-title {
+  font-size: 54px;
+  color: #fff;
+}
+
+.poke-search-input {
+  font-size: 30px;
+  background-color: #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #eee;
+  height: 40px;
+  width: 400px;
+}
+
+.pokemon-grid {
+  padding: 20px 20px 20px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.pokemon-grid-card {
+  height: 400px;
+  width: 400px;
+  margin-right: 20px;
+  border: 1px solid white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pokemon-grid-card .pokemon-grid-card-image {
+  padding-top: 10%;
+  height: 250px;
+  width: 250px;
+  cursor: pointer;
 }
+
+.pokemon-grid-card p {
+  font-size: 20px;
+  color: #fff;
+}
+
+.pokemon-profile-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
+}
+
+.pokemon-profile-card .pokemon-profile-name {
+  font-size: 46px;
+  color: #fff;
+}
+
+.pokemon-profile-card .pokemon-profile-card-type-tags {
+  font-weight: 700;
+  width: 30%;
+  font-size: 26px;
+  border: 1px solid #fff;
+  padding: 2px;
+  margin: 2px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  border-radius: 5px;
+}
+
+.pokemon-profile-card .pokemon-profile-imgs {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.pokemon-profile-card img {
+  height: 20rem;
+  width: 20rem;
+}
+
+.pokemon-profile-card .pokemon-profile-stats-table {
+  color: #fff;
+  font-size: 26px;
+  width: 60%;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.pokemon-profile-card .pokemon-profile-return-btn {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  font-weight: 400;
+  border: 1px solid transparent;
+  cursor: pointer;
+  height: 40px;
+  padding: 4px 15px;
+  font-size: 20px;
+  border-radius: 2px;
+  border-color: #d9d9d9;
+  background: #fff;
+}
+/*# sourceMappingURL=App.css.map */
