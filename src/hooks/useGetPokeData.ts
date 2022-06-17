@@ -1,13 +1,16 @@
 import axios from "axios";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
+import useDebounce from "./useDebounce";
+import { PokemonDataProps } from "../types";
 
 export default function useGetPokeData(offset = 0, query) {
-  const [pokeData, setPokeData] = useState([]);
+  const [pokeData, setPokeData] = useState<PokemonDataProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   const findSprites = async (pokeData) => {
     for await (const result of pokeData) {
-      result.sprite = (
+      result.sprites = {};
+      result.sprites.front_default = (
         await axios.get(result.url)
       )?.data?.sprites?.front_default;
     }
@@ -18,22 +21,28 @@ export default function useGetPokeData(offset = 0, query) {
   const getPokeData = async () => {
     try {
       setLoading(true);
-      let res = [];
       if (query !== "") {
-        res = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`))
-          ?.data;
+        const sprites = {
+          front_default: "",
+        };
 
-        res.sprite = res.sprites?.front_default;
-        setPokeData([res]);
+        const res = (
+          await axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`)
+        )?.data;
+
+        sprites.front_default = res.sprites?.front_default;
+
+        setPokeData([{ ...res, ...sprites }]);
       } else {
-        res = (
+        const res = (
           await axios.get(
             `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`
           )
         )?.data?.results;
 
-        res = await findSprites(res);
-        setPokeData((old) => [...old, ...res]);
+        const pokeDataWithSprites = await findSprites(res);
+
+        setPokeData((old) => [...old, ...pokeDataWithSprites]);
       }
     } catch (error) {
       console.error(error);
@@ -42,9 +51,12 @@ export default function useGetPokeData(offset = 0, query) {
     }
   };
 
-  useMemo(async () => {
-    await getPokeData();
-  }, [offset, query]);
+  const debouncedPokeSearch = useDebounce(query, 500);
+
+  useEffect(() => {
+    const fetchData = async () => await getPokeData();
+    fetchData();
+  }, [debouncedPokeSearch, offset]);
 
   return { pokeData, loading };
 }

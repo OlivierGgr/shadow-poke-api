@@ -3,6 +3,7 @@
   background-color: #282c34;
   height: 100%;
   padding-top: 5%;
+  text-transform: capitalize;
 }
 
 .poke-title {

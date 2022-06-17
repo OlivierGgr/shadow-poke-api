@@ -1,7 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { CapitalizeString } from "../utils/functions.ts";
 
 type Sprites = {
   front_default: string;
@@ -10,13 +9,12 @@ type Sprites = {
   back_shiny: string;
 };
 
-type Types = {
-  types: { name: string };
-};
+type Types = [types: TypeDetails];
+type TypeDetails = { slot: number; type: { name: string; url: string } };
 
-type Stats = {
-  stats: { name: string };
-};
+type Stats = [
+  { base_stat: number; effort: number; stat: { name: string; url: string } }
+];
 
 type PokemonDataProps = {
   species: { name: string };
@@ -26,20 +24,24 @@ type PokemonDataProps = {
 };
 
 export default function PokeCard(): JSX.Element {
-  const [pokemonData, setPokemonData] = useState<PokemonDataProps>({});
+  const [pokemonData, setPokemonData] = useState<PokemonDataProps>();
 
   const { name } = useParams();
   const navigate = useNavigate();
-  useMemo(async () => {
-    setPokemonData(
-      (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`))?.data
-    );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const pokemonData = (
+        await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      )?.data;
+      setPokemonData(pokemonData);
+    };
+    fetchData();
   }, [name]);
 
-  const typesCard = (types) => {
+  const typesCard = (types: Types) => {
     if (!types) return;
     return types.map((t) => {
-      console.log(t);
       let backgroundColor = "#fff";
       let color = "#fff";
       switch (t.type.name) {
@@ -82,7 +84,7 @@ export default function PokeCard(): JSX.Element {
     });
   };
 
-  const baseStats = (stats) => {
+  const baseStats = (stats: Stats) => {
     if (!stats) return <></>;
     const headers: string[] = [];
     const rows: number[] = [];
@@ -95,14 +97,20 @@ export default function PokeCard(): JSX.Element {
 
     return (
       <table className="pokemon-profile-stats-table">
-        <tr>
-          {headers?.map((h) => (
-            <th>{h}</th>
-          ))}
-        </tr>
-        {rows?.map((r) => (
-          <td>{r}</td>
-        ))}
+        <thead>
+          <tr>
+            {headers?.map((h) => (
+              <th key={h}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {rows?.map((r, index) => (
+              <td key={index}>{r}</td>
+            ))}
+          </tr>
+        </tbody>
       </table>
     );
   };
@@ -115,9 +123,7 @@ export default function PokeCard(): JSX.Element {
       >
         Retour
       </button>
-      <h2 className="pokemon-profile-name">
-        {CapitalizeString(pokemonData?.species?.name)}
-      </h2>
+      <h2 className="pokemon-profile-name">{pokemonData?.species?.name}</h2>
       {typesCard(pokemonData?.types)}
       <div className="pokemon-profile-imgs">
         <img src={pokemonData?.sprites?.front_default} alt="front-default" />

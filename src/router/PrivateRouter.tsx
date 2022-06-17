@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PokeCard from "../components/PokeCard.tsx";
-import PokeHome from "../components/PokeHome.tsx";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import PokeCard from "../components/PokeCard";
+import PokeHome from "../components/PokeHome";
 
 export default function PrivateRouter(): JSX.Element {
   return (
@@ -8,6 +8,7 @@ export default function PrivateRouter(): JSX.Element {
       <Routes>
         <Route path="/" element={<PokeHome />} />
         <Route path="/pokemon/:name" element={<PokeCard />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

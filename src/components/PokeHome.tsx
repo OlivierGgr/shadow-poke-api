@@ -1,29 +1,26 @@
-import { useRef, useCallback, useEffect, useState } from "react";
-import "../App.css";
-import useGetPokeData from "../hooks/useGetPokeData.ts";
-import PokeGrid from "./PokeGrid.tsx";
+import React, { useRef, useEffect, useState } from "react";
+import useGetPokeData from "../hooks/useGetPokeData";
+import PokeGrid from "./PokeGrid";
 
 export default function PokeHome() {
   const loadMore = useRef(null);
   const [offset, setOffset] = useState(0);
   const [query, setQuery] = useState("");
   const { pokeData, loading } = useGetPokeData(offset, query);
-  <h1>Mon Pokedex</h1>;
 
-  const handleObserver = useCallback(
-    (entries) => {
+  useEffect(() => {
+    if (!loadMore.current || loading || query) return;
+
+    const handleObserver = (entries) => {
       if (loading) return;
       const target = entries[0];
 
       if (target.intersectionRatio !== 0) {
         setOffset((prev) => prev + 20);
+        return observer.disconnect();
       }
-    },
-    [loading, query]
-  );
+    };
 
-  useEffect(() => {
-    if (!loadMore.current || loading || query) return;
     const option = {
       root: null,
       rootMargin: "10px",
@@ -31,7 +28,7 @@ export default function PokeHome() {
     };
     const observer = new IntersectionObserver(handleObserver, option);
     observer.observe(loadMore.current);
-  }, [loading]);
+  }, [loading, query]);
 
   return (
     <>
@@ -41,8 +38,9 @@ export default function PokeHome() {
         className="poke-search-input"
         placeholder="pikachu"
         onInput={(e) => {
-          setQuery(e.target.value);
-          if (e.target.value === "") {
+          const target = e.target as HTMLInputElement;
+          setQuery(target.value);
+          if (target.value === "") {
             setOffset(0);
           }
         }}

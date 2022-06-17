@@ -1,6 +1,30 @@
-# Getting Started with Create React App
+# PokeApi basic consumption
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## What it does
+
+This project has the simple aim of consuming some basic features of the famous [PokeApi](https://pokeapi.co/), it allows the user to :
+
+- See a list of all pokemons with of 20 items per page.
+- Access some specific data of each pokemon in a more detailed card.
+
+## How it's build
+
+Technologies used are:
+
+- React (hooks)
+- TypeScript
+- axios
+- react-router-dom
+
+## Why the PokeApi
+
+Well, because Pokemon is awesome.\
+But also that the PokeApi is extremely reliable, it serves over 250 000 000 API calls each month.\
+It's [documentation](https://pokeapi.co/docs/v2) is also very good.
+
+### Feel free to fork the project and use it to learn or just to have fun !
 
 ## Available Scripts
 
